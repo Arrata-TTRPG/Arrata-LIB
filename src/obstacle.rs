@@ -1,6 +1,6 @@
 /// Represents the minimum value for a roll to succeed.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct Obstacle(usize);
+pub struct Obstacle(pub usize);
 
 impl From<String> for Obstacle {
     /// Given in the form `Ob|ob{Obstacle Level}`.
