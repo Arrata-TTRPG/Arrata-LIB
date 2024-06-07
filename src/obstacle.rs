@@ -1,9 +1,8 @@
-
-/// Represents the minimum value for a roll to succeed. 
+/// Represents the minimum value for a roll to succeed.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Obstacle(usize);
 
-impl From<String> for Stat {
+impl From<String> for Obstacle {
     /// Given in the form `Ob|ob{Obstacle Level}`.
     /// No `name` or `checks` field are accepted.
     fn from(value: String) -> Self {
