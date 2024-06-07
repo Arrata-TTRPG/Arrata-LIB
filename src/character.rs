@@ -1,10 +1,9 @@
 // character.rs
 // All structs and enums relating to characters.
 
-
 /* Structs and Enums */
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 /// A struct containing all info about a character.
 #[derive(Serialize, Deserialize, Clone, PartialEq)]
@@ -51,7 +50,7 @@ impl Default for Character {
 ///
 /// `checks` is optional as some stats don't
 /// require checks to function.
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub struct Stat {
     pub name: String,
@@ -72,9 +71,42 @@ impl Stat {
     }
 }
 
+impl From<String> for Stat {
+    /// Given in the form `{Quality}{Quantity}`.
+    /// No `name` or `checks` field are accepted.
+    fn from(value: String) -> Self {
+        if let Some(first_char) = value.chars().next() {
+            let quality = match first_char {
+                'A' | 'a' => Quality::Adept,
+                'S' | 's' => Quality::Superb,
+                _ => Quality::Basic,
+            };
+            let quantity = value[1..].parse::<usize>().unwrap_or(1);
+            Stat {
+                name: String::new(),
+                quality,
+                quantity,
+                checks: Some(0),
+            }
+        } else {
+            Stat::new(String::new())
+        }
+    }
+}
+
+impl std::fmt::Display for Stat {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self.quality {
+            Quality::Basic => write!(f, "B{}", self.quantity),
+            Quality::Adept => write!(f, "A{}", self.quantity),
+            Quality::Superb => write!(f, "S{}", self.quantity),
+        }
+    }
+}
+
 /// A struct for Quality. Determines the
 /// lower bound for rolls.
-#[derive(Serialize, Deserialize, Clone, Copy, PartialEq)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq)]
 #[serde(rename_all = "PascalCase")]
 pub enum Quality {
     Basic = 4,
