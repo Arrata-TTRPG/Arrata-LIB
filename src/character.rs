@@ -3,9 +3,9 @@
 
 /* Structs and Enums */
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
-use bitcode::{Encode, Decode};
+use bitcode::{Decode, Encode};
 
 /// A struct containing all info about a character.
 #[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq)]
@@ -23,8 +23,8 @@ impl Character {
     #[must_use]
     pub fn new() -> Character {
         Character {
-            name: "John Arrata".to_string(),
-            stock: "Human".to_string(),
+            name: "Name".to_string(),
+            stock: "Stock".to_string(),
             stats: vec![
                 Stat::new("Will".into()),
                 Stat::new("Perception".into()),
