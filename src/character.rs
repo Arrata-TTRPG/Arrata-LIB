@@ -3,11 +3,12 @@
 
 /* Structs and Enums */
 
-use serde::{Deserialize, Serialize};
+use serde::{Serialize, Deserialize};
+
+use bitcode::{Encode, Decode};
 
 /// A struct containing all info about a character.
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
-#[serde(rename_all = "PascalCase")]
+#[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq)]
 pub struct Character {
     pub name: String,
     pub stock: String,
@@ -50,8 +51,7 @@ impl Default for Character {
 ///
 /// `checks` is optional as some stats don't
 /// require checks to function.
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
-#[serde(rename_all = "PascalCase")]
+#[derive(Encode, Decode, Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Stat {
     pub name: String,
     pub quality: Quality,
@@ -106,8 +106,7 @@ impl std::fmt::Display for Stat {
 
 /// A struct for Quality. Determines the
 /// lower bound for rolls.
-#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq)]
-#[serde(rename_all = "PascalCase")]
+#[derive(Encode, Decode, Serialize, Deserialize, Debug, Clone, Copy, PartialEq)]
 pub enum Quality {
     Basic = 4,
     Adept = 3,
@@ -127,8 +126,7 @@ impl std::fmt::Display for Quality {
 /// A struct for Quirks. Boons
 /// and flaws are optional as some
 /// Quirks are purely cosmetic/neutral.
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
-#[serde(rename_all = "PascalCase")]
+#[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq)]
 pub struct Quirk {
     pub name: String,
     pub category: QuirkCategory,
@@ -157,8 +155,7 @@ impl Default for Quirk {
 }
 
 /// The Quirk category.
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
-#[serde(rename_all = "PascalCase")]
+#[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq)]
 pub enum QuirkCategory {
     Ethos,
     Pathos,
@@ -167,8 +164,7 @@ pub enum QuirkCategory {
 }
 
 /// A struct for items.
-#[derive(Serialize, Deserialize, Clone, PartialEq)]
-#[serde(rename_all = "PascalCase")]
+#[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq)]
 pub struct Item {
     pub name: String,
     pub quantity: usize,
