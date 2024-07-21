@@ -7,6 +7,8 @@ use serde::{Deserialize, Serialize};
 
 use bitcode::{Decode, Encode};
 
+use crate::{Inspiration, Quirk};
+
 /// A struct containing all info about a character.
 #[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq)]
 pub struct Character {
@@ -15,6 +17,7 @@ pub struct Character {
     pub stats: Vec<Stat>,
     pub skills: Vec<Stat>,
     pub quirks: Vec<Quirk>,
+    pub inspiration: Inspiration,
     pub argos: String,
     pub inventory: Vec<Item>,
 }
@@ -35,6 +38,7 @@ impl Character {
             ],
             skills: Vec::new(),
             quirks: Vec::new(),
+            inspiration: Inspiration::new(),
             argos: String::new(),
             inventory: Vec::new(),
         }
@@ -121,46 +125,6 @@ impl std::fmt::Display for Quality {
             Quality::Superb => write!(f, "Superb"),
         }
     }
-}
-
-/// A struct for Quirks. Boons
-/// and flaws are optional as some
-/// Quirks are purely cosmetic/neutral.
-#[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq)]
-pub struct Quirk {
-    pub name: String,
-    pub category: QuirkCategory,
-    pub description: String,
-    pub boons: Vec<String>,
-    pub flaws: Vec<String>,
-}
-
-impl Quirk {
-    #[must_use]
-    pub fn new(name: String) -> Self {
-        Self {
-            name,
-            description: String::new(),
-            category: QuirkCategory::Ethos,
-            boons: vec![],
-            flaws: vec![],
-        }
-    }
-}
-
-impl Default for Quirk {
-    fn default() -> Self {
-        Self::new("New Quirk!".into())
-    }
-}
-
-/// The Quirk category.
-#[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq)]
-pub enum QuirkCategory {
-    Ethos,
-    Pathos,
-    Logos,
-    Uncategorized,
 }
 
 /// A struct for items.
