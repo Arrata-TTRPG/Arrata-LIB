@@ -42,6 +42,17 @@ pub enum QuirkCategory {
     Uncategorized,
 }
 
+impl std::fmt::Display for QuirkCategory {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            QuirkCategory::Ethos => write!(f, "Ethos"),
+            QuirkCategory::Pathos => write!(f, "Pathos"),
+            QuirkCategory::Logos => write!(f, "Logos"),
+            QuirkCategory::Uncategorized => write!(f, "Uncategorized"),
+        }
+    }
+}
+
 #[derive(Encode, Decode, Serialize, Deserialize, Default, Clone, PartialEq, Debug)]
 pub struct Inspiration {
     pub ethos: usize,
