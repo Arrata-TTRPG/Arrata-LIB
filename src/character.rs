@@ -12,16 +12,45 @@ use crate::{Inspiration, Quirk};
 /// A struct containing all info about a character.
 #[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct Character {
+    #[serde(default = "default_name")]
     pub name: String,
+    #[serde(default = "default_stock")]
     pub stock: String,
+    #[serde(default = "default_stats")]
     pub stats: Vec<Stat>,
+    #[serde(default)]
     pub skills: Vec<Stat>,
+    #[serde(default)]
     pub finite_resources: Vec<Stat>,
+    #[serde(default)]
     pub infinite_resources: Vec<Stat>,
+    #[serde(default)]
     pub quirks: Vec<Quirk>,
+    #[serde(default)]
     pub inspiration: Inspiration,
+    #[serde(default)]
     pub argos: String,
+    #[serde(default)]
     pub inventory: Vec<Item>,
+}
+
+fn default_name() -> String {
+    "Name".to_string()
+}
+
+fn default_stock() -> String {
+    "Stock".to_string()
+}
+
+fn default_stats() -> Vec<Stat> {
+    vec![
+        Stat::new("Will".into()),
+        Stat::new("Perception".into()),
+        Stat::new("Conscious".into()),
+        Stat::new("Power".into()),
+        Stat::new("Speed".into()),
+        Stat::new("Forte".into()),
+    ]
 }
 
 impl Character {
