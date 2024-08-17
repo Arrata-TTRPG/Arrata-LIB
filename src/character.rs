@@ -10,7 +10,7 @@ use bitcode::{Decode, Encode};
 use crate::{Inspiration, Quirk};
 
 /// A struct containing all info about a character.
-#[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct Character {
     pub name: String,
     pub stock: String,
@@ -128,7 +128,7 @@ impl std::fmt::Display for Quality {
 }
 
 /// A struct for items.
-#[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct Item {
     pub name: String,
     pub quantity: usize,
