@@ -5,7 +5,7 @@ use bitcode::{Decode, Encode};
 /// A struct for Quirks. Boons
 /// and flaws are optional as some
 /// Quirks are purely cosmetic/neutral.
-#[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct Quirk {
     pub name: String,
     pub category: QuirkCategory,
@@ -34,7 +34,7 @@ impl Default for Quirk {
 }
 
 /// The Quirk category.
-#[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq)]
+#[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub enum QuirkCategory {
     Ethos,
     Pathos,
@@ -42,7 +42,7 @@ pub enum QuirkCategory {
     Uncategorized,
 }
 
-#[derive(Encode, Decode, Serialize, Deserialize, Default, Clone, PartialEq)]
+#[derive(Encode, Decode, Serialize, Deserialize, Default, Clone, PartialEq, Debug)]
 pub struct Inspiration {
     pub ethos: usize,
     pub pathos: usize,
