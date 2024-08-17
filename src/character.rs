@@ -16,6 +16,8 @@ pub struct Character {
     pub stock: String,
     pub stats: Vec<Stat>,
     pub skills: Vec<Stat>,
+    pub finite_resources: Vec<Stat>,
+    pub infinite_resources: Vec<Stat>,
     pub quirks: Vec<Quirk>,
     pub inspiration: Inspiration,
     pub argos: String,
@@ -24,7 +26,31 @@ pub struct Character {
 
 impl Character {
     #[must_use]
-    pub fn new() -> Character {
+    pub fn new(name: String) -> Character {
+        Character {
+            name,
+            stock: "Stock".to_string(),
+            stats: vec![
+                Stat::new("Will".into()),
+                Stat::new("Perception".into()),
+                Stat::new("Conscious".into()),
+                Stat::new("Power".into()),
+                Stat::new("Speed".into()),
+                Stat::new("Forte".into()),
+            ],
+            skills: Vec::new(),
+            quirks: Vec::new(),
+            finite_resources: Vec::new(),
+            infinite_resources: Vec::new(),
+            inspiration: Inspiration::new(),
+            argos: String::new(),
+            inventory: Vec::new(),
+        }
+    }
+}
+
+impl Default for Character {
+    fn default() -> Self {
         Character {
             name: "Name".to_string(),
             stock: "Stock".to_string(),
@@ -38,16 +64,12 @@ impl Character {
             ],
             skills: Vec::new(),
             quirks: Vec::new(),
+            finite_resources: Vec::new(),
+            infinite_resources: Vec::new(),
             inspiration: Inspiration::new(),
             argos: String::new(),
             inventory: Vec::new(),
         }
-    }
-}
-
-impl Default for Character {
-    fn default() -> Self {
-        Self::new()
     }
 }
 
