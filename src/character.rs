@@ -21,9 +21,7 @@ pub struct Character {
     #[serde(default)]
     pub skills: Vec<Stat>,
     #[serde(default)]
-    pub finite_resources: Vec<Stat>,
-    #[serde(default)]
-    pub infinite_resources: Vec<Stat>,
+    pub resources: Vec<Resource>,
     #[serde(default)]
     pub quirks: Vec<Quirk>,
     #[serde(default)]
@@ -69,8 +67,7 @@ impl Character {
             ],
             skills: Vec::new(),
             quirks: Vec::new(),
-            finite_resources: Vec::new(),
-            infinite_resources: Vec::new(),
+            resources: Vec::new(),
             inspiration: Inspiration::new(),
             argos: String::new(),
             inventory: Vec::new(),
@@ -93,8 +90,7 @@ impl Default for Character {
             ],
             skills: Vec::new(),
             quirks: Vec::new(),
-            finite_resources: Vec::new(),
-            infinite_resources: Vec::new(),
+            resources: Vec::new(),
             inspiration: Inspiration::new(),
             argos: String::new(),
             inventory: Vec::new(),
@@ -156,6 +152,26 @@ impl std::fmt::Display for Stat {
             Quality::Adept => write!(f, "A{}", self.quantity),
             Quality::Superb => write!(f, "S{}", self.quantity),
         }
+    }
+}
+
+pub struct Resource {
+    /// The stat associated with the resource.
+    pub stat: Stat,
+    /// Whether the resource is finite.
+    pub finite: bool,
+}
+
+impl Resource {
+    #[must_use]
+    pub fn new(stat: Stat, finite: bool) -> Self {
+        Self { stat, finite }
+    }
+}
+
+impl Default for Resource {
+    fn default() -> Self {
+        Self::new(Stat::new("New Resource!".into()), false)
     }
 }
 
