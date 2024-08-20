@@ -155,6 +155,10 @@ impl std::fmt::Display for Stat {
     }
 }
 
+/// An abstraction for resources.
+/// 
+/// Effectively a stat with a boolean defining finite/infinite status.
+#[derive(Encode, Decode, Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Resource {
     /// The stat associated with the resource.
     pub stat: Stat,
