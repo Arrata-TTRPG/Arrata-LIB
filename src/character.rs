@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 
 use bitcode::{Decode, Encode};
 
-use crate::{Inspiration, Quirk};
+use crate::{Armor, Inspiration, Quirk, Talent, Weapon};
 
 /// A struct containing all info about a character.
 #[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq, Debug)]
@@ -30,6 +30,19 @@ pub struct Character {
     pub argos: String,
     #[serde(default)]
     pub inventory: Vec<Item>,
+    // --- Combat ---
+    #[serde(default)]
+    pub weapons: Vec<Weapon>,
+    #[serde(default)]
+    pub armor: Vec<Armor>,
+    #[serde(default)]
+    pub talents: Vec<Talent>,
+    /// Current Health. Derived max = `combat::max_health(will, forte)`.
+    #[serde(default)]
+    pub current_health: usize,
+    /// Accumulated Injury levels. Death at `forte_quantity` levels.
+    #[serde(default)]
+    pub injury: usize,
 }
 
 fn default_name() -> String {
@@ -71,6 +84,11 @@ impl Character {
             inspiration: Inspiration::new(),
             argos: String::new(),
             inventory: Vec::new(),
+            weapons: Vec::new(),
+            armor: Vec::new(),
+            talents: Vec::new(),
+            current_health: 0,
+            injury: 0,
         }
     }
 }
@@ -94,6 +112,11 @@ impl Default for Character {
             inspiration: Inspiration::new(),
             argos: String::new(),
             inventory: Vec::new(),
+            weapons: Vec::new(),
+            armor: Vec::new(),
+            talents: Vec::new(),
+            current_health: 0,
+            injury: 0,
         }
     }
 }
@@ -156,7 +179,7 @@ impl std::fmt::Display for Stat {
 }
 
 /// An abstraction for resources.
-/// 
+///
 /// Effectively a stat with a boolean defining finite/infinite status.
 #[derive(Encode, Decode, Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Resource {
@@ -222,3 +245,4 @@ impl Default for Item {
         Self::new("New Item!".into())
     }
 }
+

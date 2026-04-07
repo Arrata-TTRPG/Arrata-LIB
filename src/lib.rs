@@ -10,3 +10,5 @@ pub mod obstacle;
 pub use obstacle::Obstacle;
 pub mod quirk;
 pub use quirk::*;
+pub mod combat;
+pub use combat::*;
