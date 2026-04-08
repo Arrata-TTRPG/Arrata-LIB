@@ -29,7 +29,7 @@ impl Quirk {
 
 impl Default for Quirk {
     fn default() -> Self {
-        Self::new("New Quirk!".into())
+        Self::new(String::new())
     }
 }
 

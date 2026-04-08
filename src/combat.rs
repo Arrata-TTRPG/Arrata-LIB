@@ -73,7 +73,7 @@ impl Weapon {
 
 impl Default for Weapon {
     fn default() -> Self {
-        Self::new("New Weapon!".into())
+        Self::new(String::new())
     }
 }
 
@@ -105,7 +105,7 @@ impl Armor {
 
 impl Default for Armor {
     fn default() -> Self {
-        Self::new("New Armor!".into())
+        Self::new(String::new())
     }
 }
 
@@ -132,7 +132,7 @@ impl Talent {
 
 impl Default for Talent {
     fn default() -> Self {
-        Self::new("New Talent!".into())
+        Self::new(String::new())
     }
 }
 

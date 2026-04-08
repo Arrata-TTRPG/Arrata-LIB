@@ -198,7 +198,7 @@ impl Resource {
 
 impl Default for Resource {
     fn default() -> Self {
-        Self::new(Stat::new("New Resource!".into()), false)
+        Self::new(Stat::new(String::new()), false)
     }
 }
 
@@ -242,7 +242,6 @@ impl Item {
 
 impl Default for Item {
     fn default() -> Self {
-        Self::new("New Item!".into())
+        Self::new(String::new())
     }
 }
-
