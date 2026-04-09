@@ -79,6 +79,10 @@ pub struct RollResult {
     pub results: Vec<u8>,
 }
 
+/// The threshold for returning the `results` vec
+/// in a `RollResult`.
+pub const MAX_DICE: usize = 500;
+
 /// Rolls a given stat with advantage and disadvantage.
 ///
 /// # Inputs
@@ -91,7 +95,9 @@ pub struct RollResult {
 ///
 /// # Outputs
 ///
-/// `DiceResult` - The result of the roll.
+/// `DiceResult` - The result of the roll. If more than 500 dice are rolled,
+/// no `result` vec will be returned to avoid memory issues, but
+/// `succcesses` and `failures` will still be calculated and returned.
 #[must_use]
 pub fn roll_stat(
     stat: &crate::character::Stat,
@@ -122,6 +128,8 @@ pub fn roll_stat(
 
     let mut results: Vec<u8> = Vec::with_capacity(quantity);
 
+    let mut collect_results = stat.quantity < MAX_DICE;
+
     while quantity > 0 {
         let result: u8 = (rand::random::<u8>() % 6) + 1;
         if advantage > 0 && result == 6 {
@@ -131,7 +139,13 @@ pub fn roll_stat(
         }
         successes += isize::from(result >= quality);
         failures += usize::from(result < quality);
-        results.push(result);
+        if collect_results {
+            results.push(result);
+            if results.len() >= MAX_DICE {
+                collect_results = false;
+                results.clear();
+            }
+        }
         quantity -= 1;
     }
 
