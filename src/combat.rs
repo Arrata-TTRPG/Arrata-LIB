@@ -47,11 +47,11 @@ pub struct Weapon {
     pub name: String,
     pub skill: String,
     pub skill_requirement: Option<String>,
-    pub base_damage: i32,
+    pub base_damage: isize,
     pub stat_modifier: String,
     pub damage_type: DamageType,
     /// Percentage bonus per success over evasion, stored as integer (10 = +10%).
-    pub per_success_bonus_pct: i32,
+    pub per_success_bonus_pct: isize,
     pub notes: String,
 }
 
@@ -85,9 +85,9 @@ impl Default for Weapon {
 pub struct Armor {
     pub name: String,
     /// Flat damage reduction applied before percentage reductions.
-    pub flat_reduction: i32,
+    pub flat_reduction: isize,
     /// Percentage damage reduction (e.g. 25 = −25%). Applied after flat.
-    pub pct_reduction: i32,
+    pub pct_reduction: isize,
     pub notes: String,
 }
 
