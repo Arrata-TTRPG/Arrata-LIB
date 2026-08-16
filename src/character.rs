@@ -7,15 +7,21 @@ use serde::{Deserialize, Serialize};
 
 use bitcode::{Decode, Encode};
 
+#[cfg(feature = "dioxus")]
+use dioxus::prelude::dioxus_stores;
+
 use crate::{Armor, Inspiration, Quirk, Talent, Weapon};
 
 /// A struct containing all info about a character.
+#[cfg_attr(feature = "dioxus", derive(dioxus::prelude::Store))]
 #[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct Character {
     #[serde(default = "default_name")]
     pub name: String,
     #[serde(default = "default_stock")]
     pub stock: String,
+    #[serde(default = "default_core_stats")]
+    pub core_stats: CoreStats,
     #[serde(default = "default_stats")]
     pub stats: Vec<Stat>,
     #[serde(default)]
@@ -53,6 +59,17 @@ fn default_stock() -> String {
     "Stock".to_string()
 }
 
+fn default_core_stats() -> CoreStats {
+    CoreStats {
+        will: Stat::new("Will".into()),
+        perception: Stat::new("Perception".into()),
+        conscious: Stat::new("Conscious".into()),
+        power: Stat::new("Power".into()),
+        speed: Stat::new("Speed".into()),
+        forte: Stat::new("Forte".into()),
+    }
+}
+
 fn default_stats() -> Vec<Stat> {
     vec![
         Stat::new("Will".into()),
@@ -70,14 +87,8 @@ impl Character {
         Character {
             name,
             stock: "Stock".to_string(),
-            stats: vec![
-                Stat::new("Will".into()),
-                Stat::new("Perception".into()),
-                Stat::new("Conscious".into()),
-                Stat::new("Power".into()),
-                Stat::new("Speed".into()),
-                Stat::new("Forte".into()),
-            ],
+            core_stats: default_core_stats(),
+            stats: Vec::new(),
             skills: Vec::new(),
             quirks: Vec::new(),
             resources: Vec::new(),
@@ -98,14 +109,8 @@ impl Default for Character {
         Character {
             name: "Name".to_string(),
             stock: "Stock".to_string(),
-            stats: vec![
-                Stat::new("Will".into()),
-                Stat::new("Perception".into()),
-                Stat::new("Conscious".into()),
-                Stat::new("Power".into()),
-                Stat::new("Speed".into()),
-                Stat::new("Forte".into()),
-            ],
+            core_stats: default_core_stats(),
+            stats: Vec::new(),
             skills: Vec::new(),
             quirks: Vec::new(),
             resources: Vec::new(),
@@ -125,6 +130,7 @@ impl Default for Character {
 ///
 /// `checks` is optional as some stats don't
 /// require checks to function.
+#[cfg_attr(feature = "dioxus", derive(dioxus::prelude::Store))]
 #[derive(Encode, Decode, Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Stat {
     pub name: String,
@@ -178,9 +184,22 @@ impl std::fmt::Display for Stat {
     }
 }
 
+/// Struct for core stats. These are the base stats for a character.
+#[cfg_attr(feature = "dioxus", derive(dioxus::prelude::Store))]
+#[derive(Encode, Decode, Serialize, Deserialize, Debug, Clone, PartialEq)]
+pub struct CoreStats {
+    pub will: Stat,
+    pub perception: Stat,
+    pub conscious: Stat,
+    pub power: Stat,
+    pub speed: Stat,
+    pub forte: Stat,
+}
+
 /// An abstraction for resources.
 ///
 /// Effectively a stat with a boolean defining finite/infinite status.
+#[cfg_attr(feature = "dioxus", derive(dioxus::prelude::Store))]
 #[derive(Encode, Decode, Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Resource {
     /// The stat associated with the resource.
@@ -222,6 +241,7 @@ impl std::fmt::Display for Quality {
 }
 
 /// A struct for items.
+#[cfg_attr(feature = "dioxus", derive(dioxus::prelude::Store))]
 #[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct Item {
     pub name: String,
