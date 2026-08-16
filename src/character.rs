@@ -20,10 +20,8 @@ pub struct Character {
     pub name: String,
     #[serde(default = "default_stock")]
     pub stock: String,
-    #[serde(default = "default_core_stats")]
-    pub core_stats: CoreStats,
     #[serde(default = "default_stats")]
-    pub stats: Vec<Stat>,
+    pub stats: CoreStats,
     #[serde(default)]
     pub skills: Vec<Stat>,
     #[serde(default)]
@@ -59,26 +57,15 @@ fn default_stock() -> String {
     "Stock".to_string()
 }
 
-fn default_core_stats() -> CoreStats {
+fn default_stats() -> CoreStats {
     CoreStats {
-        will: Stat::new("Will".into()),
-        perception: Stat::new("Perception".into()),
-        conscious: Stat::new("Conscious".into()),
-        power: Stat::new("Power".into()),
-        speed: Stat::new("Speed".into()),
-        forte: Stat::new("Forte".into()),
+        will: Stat::new("Will".to_string()),
+        perception: Stat::new("Perception".to_string()),
+        conscious: Stat::new("Conscious".to_string()),
+        power: Stat::new("Power".to_string()),
+        speed: Stat::new("Speed".to_string()),
+        forte: Stat::new("Forte".to_string()),
     }
-}
-
-fn default_stats() -> Vec<Stat> {
-    vec![
-        Stat::new("Will".into()),
-        Stat::new("Perception".into()),
-        Stat::new("Conscious".into()),
-        Stat::new("Power".into()),
-        Stat::new("Speed".into()),
-        Stat::new("Forte".into()),
-    ]
 }
 
 impl Character {
@@ -87,8 +74,7 @@ impl Character {
         Character {
             name,
             stock: "Stock".to_string(),
-            core_stats: default_core_stats(),
-            stats: Vec::new(),
+            stats: default_stats(),
             skills: Vec::new(),
             quirks: Vec::new(),
             resources: Vec::new(),
@@ -109,8 +95,7 @@ impl Default for Character {
         Character {
             name: "Name".to_string(),
             stock: "Stock".to_string(),
-            core_stats: default_core_stats(),
-            stats: Vec::new(),
+            stats: default_stats(),
             skills: Vec::new(),
             quirks: Vec::new(),
             resources: Vec::new(),
