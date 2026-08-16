@@ -8,12 +8,12 @@ use serde::{Deserialize, Serialize};
 use bitcode::{Decode, Encode};
 
 #[cfg(feature = "dioxus")]
-use dioxus::prelude::dioxus_stores;
+use dioxus_stores::Store;
 
 use crate::{Armor, Inspiration, Quirk, Talent, Weapon};
 
 /// A struct containing all info about a character.
-#[cfg_attr(feature = "dioxus", derive(dioxus::prelude::Store))]
+#[cfg_attr(feature = "dioxus", derive(Store))]
 #[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct Character {
     #[serde(default = "default_name")]
@@ -130,7 +130,7 @@ impl Default for Character {
 ///
 /// `checks` is optional as some stats don't
 /// require checks to function.
-#[cfg_attr(feature = "dioxus", derive(dioxus::prelude::Store))]
+#[cfg_attr(feature = "dioxus", derive(Store))]
 #[derive(Encode, Decode, Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Stat {
     pub name: String,
@@ -185,7 +185,7 @@ impl std::fmt::Display for Stat {
 }
 
 /// Struct for core stats. These are the base stats for a character.
-#[cfg_attr(feature = "dioxus", derive(dioxus::prelude::Store))]
+#[cfg_attr(feature = "dioxus", derive(Store))]
 #[derive(Encode, Decode, Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct CoreStats {
     pub will: Stat,
@@ -199,7 +199,7 @@ pub struct CoreStats {
 /// An abstraction for resources.
 ///
 /// Effectively a stat with a boolean defining finite/infinite status.
-#[cfg_attr(feature = "dioxus", derive(dioxus::prelude::Store))]
+#[cfg_attr(feature = "dioxus", derive(Store))]
 #[derive(Encode, Decode, Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Resource {
     /// The stat associated with the resource.
@@ -241,7 +241,7 @@ impl std::fmt::Display for Quality {
 }
 
 /// A struct for items.
-#[cfg_attr(feature = "dioxus", derive(dioxus::prelude::Store))]
+#[cfg_attr(feature = "dioxus", derive(Store))]
 #[derive(Encode, Decode, Serialize, Deserialize, Clone, PartialEq, Debug)]
 pub struct Item {
     pub name: String,

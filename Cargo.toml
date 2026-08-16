@@ -9,7 +9,7 @@ bitcode = { version = "0.6.9", default-features = false, features = ["derive"] }
 rand = { version = "0.10.2", default-features = false, features = [
   "thread_rng",
 ] }
-dioxus = { version = "0.7.10", optional = true }
+dioxus-stores = "0.7.10"
 
 [features]
-dioxus = ["dep:dioxus"]
+dioxus = []
