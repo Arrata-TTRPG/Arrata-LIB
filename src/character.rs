@@ -121,7 +121,7 @@ pub struct Stat {
     pub name: String,
     pub quality: Quality,
     pub quantity: usize,
-    pub checks: Option<usize>,
+    pub checks: usize,
 }
 
 impl Stat {
@@ -131,7 +131,7 @@ impl Stat {
             name,
             quality: Quality::Basic,
             quantity: 1,
-            checks: Some(0),
+            checks: 0,
         }
     }
 }
@@ -151,7 +151,7 @@ impl From<String> for Stat {
                 name: String::new(),
                 quality,
                 quantity,
-                checks: Some(0),
+                checks: 0,
             }
         } else {
             Stat::new(String::new())
