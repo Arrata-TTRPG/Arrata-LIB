@@ -126,12 +126,16 @@ pub fn roll_stat(
         quantity -= disadvantage - 1;
     }
 
-    let mut results: Vec<u8> = Vec::with_capacity(quantity);
-
     let mut collect_results = stat.quantity < MAX_DICE;
 
+    let mut results: Vec<u8> = if collect_results {
+        Vec::with_capacity(quantity)
+    } else {
+        Vec::new()
+    };
+
     while quantity > 0 {
-        let result: u8 = (rand::random::<u8>() % 6) + 1;
+        let result: u8 = rand::random_range(1..=6);
         if advantage > 0 && result == 6 {
             quantity += 1;
         } else if disadvantage > 0 && result == 1 {
@@ -143,7 +147,7 @@ pub fn roll_stat(
             results.push(result);
             if results.len() >= MAX_DICE {
                 collect_results = false;
-                results.clear();
+                results = Vec::new();
             }
         }
         quantity -= 1;
